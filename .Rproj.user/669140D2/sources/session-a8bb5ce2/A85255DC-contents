@@ -8,7 +8,7 @@ library(arrow)
 library(dplyr)
 library(ggplot2)
 
-# load data
+# importing data
 merged_data <- read_parquet(file = "merged_data.parquet" , stringsAsFactors = TRUE)
 
 # look at top of data
@@ -33,17 +33,32 @@ subset_data_az <- subset(merged_data, STATE_ABBR_2010SVI == "AZ")
 summary(subset_data_az[, 1:10], 6)
 
 # create summaries for subset
-upward_mean_2010_az <- mean(subset_data_az$upward_mobility_rate_2010)
-upward_sd_2010_az <- sd(subset_data_az$upward_mobility_rate_2010)
-upward_mean_2020_az <- mean(subset_data_az$upward_mobility_rate_2020)
-upward_sd_2020_az <- sd(subset_data_az$upward_mobility_rate_2020)
+upward_mean_2010_az <- mean(subset_data_az$upward_mobility_rate_2010,  na.rm = TRUE)
+upward_sd_2010_az <- sd(subset_data_az$upward_mobility_rate_2010,  na.rm = TRUE)
+upward_mean_2020_az <- mean(subset_data_az$upward_mobility_rate_2020, na.rm = TRUE)
+upward_sd_2020_az <- sd(subset_data_az$upward_mobility_rate_2020,  na.rm = TRUE)
 
 # print mean AZ
 print(upward_mean_2010_az)
 
 # print mean CA
+print(upward_mean_2010_ca <- mean(subset_data_ca$upward_mobility_rate_2010, na.rm = TRUE))
+
+
+# print mean CA (state-level)
 subset_data_ca <- subset(merged_data, STATE_ABBR_2010SVI == "CA")
-print(upward_mean_2010_ca <- mean(subset_data_ca$upward_mobility_rate_2010))
+print(upward_mean_2010_ca <- mean(subset_data_ca$upward_mobility_rate_2010,  na.rm = TRUE))
+
+# county level summary
+# pima upward mean
+print(pima_upward_mean_2010_az <- mean(subset_data_az$upward_mobility_rate_2010[subset_data_az$COUNTY_2010SVI == "Pima County"],  na.rm = TRUE))
+
+# print standard deviation for Pima County (Arizona)
+print(pima_sd_2010_az <- sd(subset_data_az$upward_mobility_rate_2010[subset_data_az$COUNTY_2010SVI == "Pima County"], na.rm = TRUE))
+
+# print standard deviation for Del Norte County (California)
+print(delnorte_sd_2010_ca <- sd(subset_data_ca$upward_mobility_rate_2010[subset_data_ca$COUNTY_2010SVI == "Del Norte County"], na.rm = TRUE))
+
 
 # county level summary
 # pima upward mean
@@ -66,20 +81,50 @@ summary_stats_upward_2010 <- subset_data_az %>%
 (head(summary_stats_upward_2010))
 
 # visualization with ggplot2
-mobility_plot <- ggplot(data = summary_stats_upward_2010,
+mobility_plot_sumstats <- ggplot(data = summary_stats_upward_2010,
                         mapping = aes(x= COUNTY_2010SVI, y=mean_mobility_2010_az)) + geom_boxplot()
 # print mobility plot
-print(mobility_plot)
+print(mobility_plot_sumstats)
 
 # state and county summary
 summary_stats_upward_2010_all <- merged_data %>%
   group_by(STATE_ABBR_2010SVI, COUNTY_2010SVI) %>%
   summarize(mean_mobility_2010 = mean(upward_mobility_rate_2010), sd_mobility_2010 = sd(upward_mobility_rate_2010))
 # grouping by state
-mobility_plot <- ggplot(data = summary_stats_upward_2010_all, mapping = aes(x = STATE_ABBR_2010SVI, y = mean_mobility_2010)) + geom_boxplot()
-print(mobility_plot)
+mobility_plot_by_state_upward <- ggplot(data = summary_stats_upward_2010_all, mapping = aes(x = STATE_ABBR_2010SVI, y = mean_mobility_2010)) + geom_boxplot()
+print(mobility_plot_by_state_upward)
 
 # remove missing states
 summary_stats_upward_2010_all <- summary_stats_upward_2010_all[!is.na(summary_stats_upward_2010_all$STATE_ABBR_2010SVI),]
 
 # group by state
+mobility_plot_sum_by_state <- ggplot(data = summary_stats_upward_2010_all, mapping = aes(x= STATE_ABBR_2010SVI, y=mean_mobility_2010, fill = STATE_ABBR_2010SVI)) + geom_boxplot()
+print(mobility_plot_sum_by_state)
+# save plot
+ggsave(plot = mobility_plot_sum_by_state, filename = "output/mobility_plot_sum_by_state-2010.pdf")
+
+# student activities
+
+# Maricopa County Filtering
+maricopa <- subset_data_az[subset_data_az$COUNTY_2010SVI == "Maricopa County", ]
+
+# Summary Stats for Maricopa
+maricopa_summary <- maricopa %>%
+  summarise(
+    mean_2010 = mean(upward_mobility_rate_2010, na.rm = TRUE),
+    sd_2010 = sd(upward_mobility_rate_2010, na.rm = TRUE),
+    mean_2020 = mean(upward_mobility_rate_2020, na.rm = TRUE),
+    sd_2020 = sd(upward_mobility_rate_2020, na.rm = TRUE)
+  )
+# run it
+print(maricopa_summary)
+
+
+#   comparison:
+
+#   Boxplot Selected County
+
+#   Maricopa
+#     2010
+
+#     2020
