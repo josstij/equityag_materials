@@ -227,3 +227,6 @@ aov(formula = upward_mobility_rate_2010 ~ COUNTY_2010SVI, data = ca)
 mobility_v_pop_state <- lm(formula = upward_mobility_rate_2020 ~ logpop + az + E_POV_2018SVI, data = merged)
 summary(mobility_v_pop_state)
  
+
+# reflect and extend
+# I feel like I need more practice.
