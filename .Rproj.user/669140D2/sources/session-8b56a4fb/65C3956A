@@ -1,0 +1,28 @@
+{
+    "id": "65C3956A",
+    "path": null,
+    "project_path": null,
+    "type": "object_explorer",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1752783777441.0,
+    "source_on_save": false,
+    "relative_order": 3,
+    "properties": {
+        "id": "a5f0da8290294ee8aeb4a2c57366990b",
+        "name": "mobility_v_pop_state",
+        "title": "mobility_v_pop_state",
+        "language": "R",
+        "source_window_id": "",
+        "Source": "Source"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1,
+    "encoding": "",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1752783777441,
+    "read_only": false,
+    "read_only_alternatives": []
+}
