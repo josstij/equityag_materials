@@ -104,27 +104,10 @@ print(maricopa_upward_mean_2010_az <- mean(subset_data_az$upward_mobility_rate_2
 #   2020
 print(maricopa_upward_mean_2020_az <- mean(subset_data_az$upward_mobility_rate_2020[subset_data_az$COUNTY_2020SVI == "Maricopa County"]))
 
-# Alameda County SD
-# 2010
-print(alameda_upward_sd_2010_ca <- sd(subset_data_ca$upward_mobility_rate_2010[subset_data_ca$COUNTY_2010SVI == "Alameda County"]))
-# 2020
-print(alameda_upward_sd_2020_ca <- sd(subset_data_ca$upward_mobility_rate_2020[subset_data_ca$COUNTY_2020SVI == "Alameda County"]))
-# Alameda County Mean
-#   2010
-print(alameda_upward_mean_2010_ca <- mean(subset_data_ca$upward_mobility_rate_2010[subset_data_ca$COUNTY_2010SVI == "Alameda County"]))
-print(mobility_plot)
-#   2020
-print(alameda_upward_mean_2020_ca <- mean(subset_data_ca$upward_mobility_rate_2020[subset_data_ca$COUNTY_2020SVI == "Alameda County"]))
-print(mobility_plot)
-
-#   Boxplot Selected County
+#   Boxplot Selected County (Maricopa) compared to state (Arizona)
 
 #   Maricopa
 #     2010
 
 #     2020
 
-#   Alameda
-#     2010
-
-#     2020

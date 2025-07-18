@@ -1,0 +1,10 @@
+---
+  title: "Tijerina_L1pt2"
+output: html_document
+date: "2025-07-14"
+---
+# load packages
+library(arrow)
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
